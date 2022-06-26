@@ -99,7 +99,7 @@ void loop() {
     Serial.println(""); 
     Serial.print("Smoke:");
     Serial.print(smoke);
-    Serial.println("");  
+    Serial.println("ppm");  
     Serial.print("Status:");
     Serial.println(stat);
   }

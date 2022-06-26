@@ -84,7 +84,8 @@ void loop()
   Serial.print("Smoke:");
   Serial.print(smoke);
   Serial.println(""); 
-  
+  Serial.print("Status:");
+  Serial.println(stat);
  
   LoRa.endPacket();
   delay(1000);
