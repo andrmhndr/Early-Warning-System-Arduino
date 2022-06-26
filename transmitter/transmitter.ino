@@ -14,6 +14,7 @@ int hum;
 float temp; //Stores temperature value
 long getar;
 int smoke;
+String stat;
  
 void setup() {    
   Serial.begin(9600);
@@ -33,6 +34,27 @@ void loop()
   hum = dht.readHumidity();
   getar = pulseIn(Sensor_Out_Pin, HIGH);
   smoke = analogRead(smokeA0);
+
+  //normal
+  if(temp <= 35 && hum > 15 && getar <= 10 && smoke <= 50){
+    stat = "Normal";
+  }
+  //waspada
+  else if(temp > 35 && temp <= 38 && hum > 10 && hum <= 14 && getar > 10 && smoke > 50 && smoke <= 500 ){
+    stat = "Waspada";
+  }
+  //siaga
+  else if(temp > 38 && temp <= 40 && hum > 5 && hum <= 9 && getar > 20 && smoke > 500 && smoke <= 1000){
+    stat = "Siaga"; 
+  }
+  //awas
+  else if(temp > 40 && hum > 4 && hum <= 0 && getar > 50 && smoke > 1000){
+    stat = "Awas";
+  }
+  //random
+  else {
+    stat = "Normal";
+  }
   
   Serial.println("");
   Serial.println("Sending packet: ");
@@ -40,14 +62,15 @@ void loop()
  
   // send packet
   LoRa.beginPacket();
-  LoRa.println(""); 
   LoRa.print(hum);
   LoRa.print("!");
   LoRa.print(temp);
   LoRa.print("@");
   LoRa.print(getar);
   LoRa.print("#");
-  LoRa.println(smoke);
+  LoRa.print(smoke);
+  LoRa.print("$");
+  LoRa.print(stat);
   
   Serial.print("Humidity: ");
   Serial.print(hum);

@@ -55,6 +55,7 @@ void loop() {
     String temp;
     String getar;
     String smoke;
+    String stat;
     
     String data;
     // read packet
@@ -72,17 +73,20 @@ void loop() {
     int humIndex = data.lastIndexOf('!');
     int tempIndex = data.lastIndexOf('@');
     int getarIndex = data.lastIndexOf('#');
-    int smokeIndex = data.length();
+    int smokeIndex = data.lastIndexOf('$');
+    int statIndex = data.length
 
     hum = data.substring(0,humIndex);
     temp = data.substring(humIndex+1,tempIndex);
     getar = data.substring(tempIndex+1, getarIndex);
     smoke = data.substring(getarIndex+1, smokeIndex);
+    stat = data.substring(smokeIndex+1, statIndex);
 
     Firebase.setString("data/humidity",hum);
     Firebase.setString("data/temperature",temp);
     Firebase.setString("data/getar",getar);
     Firebase.setString("data/smoke",smoke);
+    Firebase.setString("data/status",stat);
 
     Serial.print("Humidity:" );
     Serial.print(hum);
@@ -95,6 +99,8 @@ void loop() {
     Serial.println(""); 
     Serial.print("Smoke:");
     Serial.print(smoke);
-    Serial.println("");    
+    Serial.println("");  
+    Serial.print("Status:");
+    Serial.println(stat);
   }
 }
